@@ -1,5 +1,14 @@
 import jwt from "jsonwebtoken"
 import { IPayload } from "../models/interfaces";
+import { NextFunction, Request, Response } from "express";
+
+declare global {
+    namespace Express {
+        interface Request {
+            user?: { id: string }; // Adjust this type to match your payload structure
+        }
+    }
+}
 
 export function generateToken(payload: IPayload) {
     try {
@@ -28,5 +37,29 @@ export function validateToken(token: string) {
         } else {
             return { error: "token verification failed" };
         }
+    }
+}
+
+export function isAuthenticated(req: Request, res: Response, next: NextFunction) {
+    try {
+        console.log("headers", req.headers)
+        const { token } = req.headers;
+
+        if (!token) {
+            res.status(401).json({ error: "Access denied, no token provided" });
+            return;
+        }
+
+        const { error, decoded } = validateToken(token as string);
+        if (error || !decoded) {
+            res.status(400).json({ error });
+            return;
+        }
+
+        req.user = decoded as IPayload;
+        next();
+    } catch (err) {
+        res.status(500).json({ error: "Internal server error" });
+        return
     }
 }
