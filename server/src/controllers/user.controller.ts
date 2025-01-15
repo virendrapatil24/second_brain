@@ -79,7 +79,6 @@ export async function shareBrainLink(req: Request, res: Response) {
         }
         const userId = req.user.id;
         const { share } = req.body;
-        console.log("share", share)
         if (share) {
             const existingLink = await Link.findOne({ userId })
             if (existingLink) {

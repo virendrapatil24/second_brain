@@ -42,7 +42,6 @@ export function validateToken(token: string) {
 
 export function isAuthenticated(req: Request, res: Response, next: NextFunction) {
     try {
-        console.log("headers", req.headers)
         const { token } = req.headers;
 
         if (!token) {
