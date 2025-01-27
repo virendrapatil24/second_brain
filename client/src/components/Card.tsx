@@ -1,11 +1,11 @@
 
 import TrashIcon from '../icons/TrashIcon'
 
-interface CardProps {
+export interface CardProps {
     title: string;
     link: string;
     type: "youtube" | "twitter";
-    tags: string[];
+    tags?: string[];
     date?: string;
 }
 
@@ -47,7 +47,7 @@ const Card = ({ title, link, type, tags, date }: CardProps) => {
 
             {/* Tags */}
             <div className='flex flex-wrap gap-2'>
-                {
+                {tags &&
                     tags.map((tag, index) => (
                         <span key={index} className='bg-turquoise-100 py-1 px-2 rounded-full text-sm text-turquoise-900'>
                             #{tag}

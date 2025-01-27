@@ -8,7 +8,7 @@ export const useContent = (intervalDuration = 10 * 1000) => {
 
     const refresh = useCallback(async () => {
         try {
-            const token = localStorage.getItem("token");
+            const token = localStorage.getItem("secondBrainAuthToken");
             const response = await axios.get(
                 `${apiURL}/api/v1/content/`,
                 {
