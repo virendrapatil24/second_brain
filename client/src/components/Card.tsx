@@ -1,7 +1,10 @@
 
+import axios from 'axios';
 import TrashIcon from '../icons/TrashIcon'
+import { useContent } from '../hooks/useContent';
 
 export interface CardProps {
+    _id: string;
     title: string;
     link: string;
     type: "youtube" | "twitter";
@@ -9,7 +12,28 @@ export interface CardProps {
     date?: string;
 }
 
-const Card = ({ title, link, type, tags, date }: CardProps) => {
+const Card = ({ title, link, type, tags, date, _id }: CardProps) => {
+    const apiURL = import.meta.env.VITE_API_URL;
+    const { refresh } = useContent();
+
+    const deleteContent = async (id: string) => {
+        try {
+            const token = localStorage.getItem("secondBrainAuthToken");
+            await axios.delete(`${apiURL}/api/v1/content/`, {
+                params: { contentId: id },
+                headers: {
+                    token: token || "",
+                }
+            })
+
+        } catch (err) {
+            console.error("unable to delete content", err)
+        } finally {
+            refresh();
+        }
+    }
+
+
     return (
         <div className='flex flex-col gap-4 w-72 h-96 p-4 border rounded-2xl overflow-hidden'>
 
@@ -18,7 +42,7 @@ const Card = ({ title, link, type, tags, date }: CardProps) => {
                 <div className='flex items-center gap-1 text-lg truncate'>
                     {title}
                 </div>
-                <div className='flex items-center text-gray-500'>
+                <div className='flex items-center text-gray-500 cursor-pointer' onClick={() => deleteContent(_id!)}>
                     <TrashIcon />
                 </div>
             </div>
@@ -57,7 +81,7 @@ const Card = ({ title, link, type, tags, date }: CardProps) => {
             </div>
 
             {/* Footer */}
-            <div className='text-sm text-gray-500 '>{date}</div>
+            <div className='flex text-sm text-gray-500 justify-center'>Added on 01/01/2025 {date}</div>
 
         </div >
 

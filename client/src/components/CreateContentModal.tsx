@@ -35,7 +35,7 @@ const CreateContentModal = ({ isActive, onClose }: CreateContentModalProps) => {
                 }
             })
 
-            if (response.status === 200) {
+            if (response.status === 201) {
                 const content = response.data.content;
                 console.log(content)
             } else {
