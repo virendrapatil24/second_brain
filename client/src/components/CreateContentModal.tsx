@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import CloseIcon from "../icons/CloseIcon";
 import Input from "./ui/Input";
 import Button from "./ui/Button";
+import axios from "axios";
 
 interface CreateContentModalProps {
     isActive: boolean;
@@ -17,6 +18,37 @@ const CreateContentModal = ({ isActive, onClose }: CreateContentModalProps) => {
     const titleRef = useRef<HTMLInputElement>();
     const linkRef = useRef<HTMLInputElement>();
     const [type, setType] = useState(ContentType.Youtube);
+    const apiURL = import.meta.env.VITE_API_URL;
+
+    const addContent = async () => {
+        try {
+            const title = titleRef.current?.value;
+            const link = linkRef.current?.value;
+
+            const response = await axios.post(`${apiURL}/api/v1/content/`, {
+                title,
+                link,
+                type
+            }, {
+                headers: {
+                    "token": localStorage.getItem("secondBrainAuthToken")
+                }
+            })
+
+            if (response.status === 200) {
+                const content = response.data.content;
+                console.log(content)
+            } else {
+                alert("unable to add any content")
+            }
+
+        } catch (err) {
+            console.error(`unable to add content. error: ${err}`)
+            alert("unable to add content")
+        } finally {
+            onClose();
+        }
+    }
 
     return (
 
@@ -52,7 +84,7 @@ const CreateContentModal = ({ isActive, onClose }: CreateContentModalProps) => {
                             </div>
 
                             <div className="flex justify-center">
-                                <Button onClick={() => console.log("adding content")} variant="primary" size="lg" text="Submit" />
+                                <Button onClick={addContent} variant="primary" size="lg" text="Submit" />
                             </div>
                         </div>
                     </div>

@@ -25,7 +25,7 @@ const Login = ({ setIsUserLoggedIn }: LogInPageProps) => {
             })
 
             if (response.status === 200) {
-                const token = response.data.token;
+                const token = response.data.authToken;
                 localStorage.setItem("secondBrainAuthToken", token);
                 setIsUserLoggedIn(true)
                 navigate("/");

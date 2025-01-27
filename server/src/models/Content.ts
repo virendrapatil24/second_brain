@@ -1,7 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 import { IContent } from "./interfaces";
 
-const contentType = ['image', 'video', 'article', 'audio', 'other'];
+const contentType = ['image', 'video', 'article', 'audio', 'other', 'youtube', 'twitter'];
 
 const ContentSchema: Schema = new Schema({
     link: { type: String },

@@ -10,7 +10,6 @@ interface CardProps {
 }
 
 const Card = ({ title, link, type, tags, date }: CardProps) => {
-    { console.log(title) }
     return (
         <div className='flex flex-col gap-4 w-72 h-96 p-4 border rounded-2xl overflow-hidden'>
 
