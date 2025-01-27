@@ -7,6 +7,7 @@ export interface ButtonProps {
     startIcon?: ReactNode;
     endIcon?: ReactNode;
     onClick?: () => void;
+    className?: string;
 }
 
 const variantStyles = {
@@ -22,9 +23,9 @@ const sizeStyles = {
 
 const defaultStyles = "flex justify-center items-center"
 
-const Button = ({ variant = "primary", size = "md", text, startIcon, endIcon }: ButtonProps) => {
+const Button = ({ variant = "primary", size = "md", text, startIcon, endIcon, onClick, className }: ButtonProps) => {
     return (
-        <button className={`${defaultStyles}  ${variantStyles[variant]} ${sizeStyles[size]}`}>
+        <button onClick={onClick} className={`${defaultStyles}  ${variantStyles[variant]} ${sizeStyles[size]} ${className}`}>
             <div className="pr-2">
                 {startIcon}
             </div>
