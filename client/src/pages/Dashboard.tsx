@@ -5,13 +5,13 @@ import SideBar from '../components/SideBar';
 import CardGrid from '../components/CardGrid';
 import { useContent } from '../hooks/useContent';
 
-const Dashboard = () => {
+const Dashboard = ({ onLogout }) => {
     const [isCreateContentModalActive, setIsCreateContentModalActive] = useState(false);
     const { content, error, handleDeleteContent } = useContent();
 
     return (
         <>
-            <SideBar />
+            <SideBar onLogout={onLogout} />
             <CreateContentModal
                 isActive={isCreateContentModalActive}
                 onClose={() => setIsCreateContentModalActive(false)}

@@ -40,11 +40,18 @@ const Login = ({ setIsUserLoggedIn }: LogInPageProps) => {
         }
     }
 
+    const handleSignUpClick = () => {
+        navigate("/signup");
+    };
+
     return (
         <div className='flex h-screen w-full bg-slate-200 justify-center items-center'>
             <div className='w-full max-w-md bg-white p-4 rounded-lg' >
 
-                <h2 className='text-turquoise-900 p-2'>Create a new account to get started.</h2>
+                <div className='flex items-center'>
+                    <h2 className='text-turquoise-900 p-2'>Create a new account to get started.</h2>
+                    <Button variant='secondary' text='Sign Up' size='sm' className='h-7 text-sm' onClick={handleSignUpClick} />
+                </div>
 
                 <Input placeholder='Username' reference={usernameRef} />
 
@@ -54,6 +61,8 @@ const Login = ({ setIsUserLoggedIn }: LogInPageProps) => {
                     <Button text="Login" variant='secondary' className="w-full" onClick={login} />
                     <h4 className='text-xs text-slate-400 pt-1'>note all the fields are mandatory</h4>
                 </div>
+
+
 
             </div>
         </div>

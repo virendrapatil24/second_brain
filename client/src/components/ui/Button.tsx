@@ -16,7 +16,7 @@ const variantStyles = {
 }
 
 const sizeStyles = {
-    "sm": "py-1 px-2 rounded",
+    "sm": "py-0 px-2 rounded",
     "md": "py-2 px-4 rounded-md",
     "lg": "py-3 px-12 rounded-lg"
 }
