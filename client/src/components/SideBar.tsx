@@ -1,4 +1,3 @@
-import React from 'react'
 import BrainIcon from '../icons/BrainIcon'
 import SidebarItem from './SidebarItem'
 import YoutubeIcon from '../icons/YoutubeIcon'

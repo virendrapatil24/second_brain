@@ -1,5 +1,3 @@
-import React from 'react'
-
 const BrainIcon = () => {
     return (
         <svg xmlns="http://www.w3.org/2000/svg" id="brain" enable-background="new 0 0 64 64" version="1.1" viewBox="0 0 64 64" className='size-10'>
