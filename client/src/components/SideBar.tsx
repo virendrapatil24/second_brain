@@ -4,7 +4,11 @@ import YoutubeIcon from '../icons/YoutubeIcon'
 import TwitterIcon from '../icons/TwitterIcon'
 import Button from './ui/Button'
 
-const SideBar = ({ onLogout }) => {
+interface SideBarProps {
+    onLogout: () => void
+}
+
+const SideBar = ({ onLogout }: SideBarProps) => {
 
     return (
         <div className='h-screen bg-white border-r w-72 fixed left-0 top-0 flex flex-col justify-between pb-6'>

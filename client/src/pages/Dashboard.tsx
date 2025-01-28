@@ -5,7 +5,11 @@ import SideBar from '../components/SideBar';
 import CardGrid from '../components/CardGrid';
 import { useContent } from '../hooks/useContent';
 
-const Dashboard = ({ onLogout }) => {
+interface DashboardProps {
+    onLogout: () => void
+}
+
+const Dashboard = ({ onLogout }: DashboardProps) => {
     const [isCreateContentModalActive, setIsCreateContentModalActive] = useState(false);
     const { content, error, handleDeleteContent } = useContent();
 
