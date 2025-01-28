@@ -1,39 +1,36 @@
-import axios from "axios";
-import { useEffect, useState, useCallback } from "react";
-
+import { useState, useEffect, useCallback } from 'react';
+import { fetchContent, deleteContent } from '../services/apiService';
 
 export const useContent = (intervalDuration = 10 * 1000) => {
     const [content, setContent] = useState([]);
-    const apiURL = import.meta.env.VITE_API_URL;
+    const [error, setError] = useState<string | null>(null);
+    const token = localStorage.getItem('secondBrainAuthToken') || '';
 
     const refresh = useCallback(async () => {
         try {
-            const token = localStorage.getItem("secondBrainAuthToken");
-            const response = await axios.get(
-                `${apiURL}/api/v1/content/`,
-                {
-                    headers: {
-                        token: token || "",
-                    },
-                }
-            );
-            setContent(response.data.content);
-        } catch (error) {
-            console.error("Error fetching content:", error);
+            const contentData = await fetchContent(token);
+            setContent(contentData);
+        } catch (err) {
+            console.error(err)
+            setError('Failed to fetch content');
         }
-    }, [apiURL]);
+    }, [token]);
+
+    const handleDeleteContent = async (id: string) => {
+        try {
+            await deleteContent(id, token);
+            refresh();
+        } catch (err) {
+            console.error(err)
+            setError('Failed to delete content');
+        }
+    };
 
     useEffect(() => {
-        const interval = setInterval(() => {
-            refresh();
-        }, intervalDuration);
-
+        const interval = setInterval(refresh, intervalDuration);
         refresh();
-
-        return () => {
-            clearInterval(interval);
-        };
+        return () => clearInterval(interval);
     }, [refresh, intervalDuration]);
 
-    return { refresh, content };
+    return { content, error, refresh, handleDeleteContent };
 };
